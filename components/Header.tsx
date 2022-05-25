@@ -13,8 +13,11 @@ import {
   SpeakerphoneIcon,
   VideoCameraIcon,
 } from '@heroicons/react/solid'
+import { signIn, signOut, useSession } from 'next-auth/react'
 
 const Header = () => {
+  const { data: session } = useSession()
+
   return (
     <div className="sticky top-0 z-50 flex bg-white px-4 py-2 shadow-sm">
       <div className="relative h-10 w-20 flex-shrink-0 cursor-pointer">
@@ -55,16 +58,38 @@ const Header = () => {
         <MenuIcon className="icon" />
       </div>
 
-      <div className="hidden cursor-pointer items-center space-x-2 border border-gray-100 lg:flex">
-        <div className="relative h-5 w-5 flex-shrink-0">
-          <Image
-            layout="fill"
-            objectFit="contain"
-            src="https://links.papareact.com/23l"
-          />
+      {session ? (
+        <div
+          onClick={() => signOut()}
+          className="hidden cursor-pointer items-center space-x-2 border border-gray-100 lg:flex"
+        >
+          <div className="relative h-5 w-5 flex-shrink-0">
+            <Image
+              layout="fill"
+              objectFit="contain"
+              src="https://links.papareact.com/23l"
+            />
+          </div>
+          <div className="flex-1 text-xs">
+            <p className="truncate">{session?.user?.name}</p>
+            <p className="text-gray-500">1 Karma</p>
+          </div>
         </div>
-        <p className="text-gray-500">Sign In</p>
-      </div>
+      ) : (
+        <div
+          onClick={() => signIn()}
+          className="hidden cursor-pointer items-center space-x-2 border border-gray-100 lg:flex"
+        >
+          <div className="relative h-5 w-5 flex-shrink-0">
+            <Image
+              layout="fill"
+              objectFit="contain"
+              src="https://links.papareact.com/23l"
+            />
+          </div>
+          <p className="text-gray-500">Sign In</p>
+        </div>
+      )}
     </div>
   )
 }

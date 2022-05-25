@@ -9,7 +9,6 @@ const Home: NextPage = () => {
         <title>Reddit</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Header />
       <p>Hello World</p>
     </div>
   )
